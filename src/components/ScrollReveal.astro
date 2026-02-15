@@ -1,0 +1,74 @@
+---
+
+---
+
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.25,
+        }
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal-active')
+                    observer.unobserve(entry.target)
+                }
+            })
+        }, observerOptions)
+
+        const revealElements = document.querySelectorAll('.reveal')
+        revealElements.forEach((el) => observer.observe(el))
+    })
+</script>
+
+<style is:global>
+    /* Base reveal state - Hidden by default but accessible to screen readers */
+    .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        will-change: opacity, transform;
+    }
+
+    /* Revealed state */
+    .reveal-active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Variations */
+    .reveal.fade-in {
+        transform: translateY(0);
+    }
+
+    .reveal.zoom-in {
+        transform: scale(0.95);
+    }
+
+    .reveal-active.zoom-in {
+        transform: scale(1);
+    }
+
+    /* Stagger delays */
+    .delay-100 {
+        transition-delay: 0.1s;
+    }
+    .delay-200 {
+        transition-delay: 0.2s;
+    }
+    .delay-300 {
+        transition-delay: 0.3s;
+    }
+
+    /* Fallback for reduced motion or no-js */
+    @media (prefers-reduced-motion: reduce) {
+        .reveal {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+        }
+    }
+</style>

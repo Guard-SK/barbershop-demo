@@ -1,0 +1,219 @@
+---
+import '@fontsource/inter/400.css'
+import '@fontsource/inter/500.css'
+import '@fontsource/inter/600.css'
+import '@fontsource/inter/700.css'
+import '@fontsource/oswald/400.css'
+import '@fontsource/oswald/500.css'
+import '@fontsource/oswald/600.css'
+import '@fontsource/oswald/700.css'
+
+import SEO from '../components/SEO.astro'
+import ScrollReveal from '../components/ScrollReveal.astro'
+import '../styles/global.css'
+import { getImage } from 'astro:assets'
+import heroImage from '../assets/hero.avif'
+
+const optimizedHero = await getImage({
+	src: heroImage,
+	format: 'avif',
+	width: 1920,
+	height: 1080,
+})
+
+interface Props {
+	title: string
+	description?: string
+	image?: string
+}
+
+const {
+	title,
+	description = 'Premium Barber Shop in Bratislava.',
+	image,
+} = Astro.props
+---
+
+<!doctype html>
+<html lang="sk">
+	<head>
+		<SEO title={title} description={description} image={image} />
+		<!-- Preload Hero Image for LCP -->
+		<link rel="preload" as="image" href={optimizedHero.src} />
+	</head>
+	<!-- Navigation -->
+	<header
+		class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5"
+	>
+		<div
+			class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center"
+		>
+			<a
+				href="/"
+				class="text-2xl font-black tracking-tighter text-white hover:text-luxury-gold transition-colors"
+				>BARBER.BA</a
+			>
+
+			<!-- Desktop Menu -->
+			<nav
+				class="hidden md:flex gap-8 text-sm uppercase tracking-widest font-bold text-white"
+			>
+				<a
+					href="#cennik"
+					class="link-underline hover:text-luxury-gold transition-colors"
+					>Cenník</a
+				>
+				<a
+					href="#nas-tim"
+					class="link-underline hover:text-luxury-gold transition-colors"
+					>Náš tím</a
+				>
+				<a
+					href="#recenzie"
+					class="link-underline hover:text-luxury-gold transition-colors"
+					>Recenzie</a
+				>
+				<a
+					href="#galeria"
+					class="link-underline hover:text-luxury-gold transition-colors"
+					>Galéria</a
+				>
+				<a
+					href="#kontakt"
+					class="link-underline hover:text-luxury-gold transition-colors"
+					>Kontakt</a
+				>
+				<a
+					href="https://www.bookio.com/sk"
+					target="_blank"
+					class="bg-luxury-gold text-black px-6 py-2 btn-luxury hover:bg-white transition-colors"
+				>
+					Rezervovať
+				</a>
+			</nav>
+
+			<!-- Mobile Menu Button -->
+			<button
+				id="menu-toggle"
+				class="md:hidden text-white p-2"
+				aria-label="Otvoriť menu"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="32"
+					height="32"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					><line x1="4" x2="20" y1="12" y2="12"></line><line
+						x1="4"
+						x2="20"
+						y1="6"
+						y2="6"></line><line x1="4" x2="20" y1="18" y2="18"
+					></line></svg
+				>
+			</button>
+		</div>
+	</header>
+
+	<!-- Mobile Menu Overlay (Moved outside header for full height) -->
+	<div
+		id="mobile-menu"
+		class="fixed inset-0 bg-black z-[100] flex flex-col items-center justify-center gap-8 text-2xl font-black uppercase tracking-tighter translate-x-full transition-transform duration-300 overflow-hidden text-white"
+	>
+		<a
+			href="#cennik"
+			class="menu-link hover:text-luxury-gold transition-colors">Cenník</a
+		>
+		<a
+			href="#nas-tim"
+			class="menu-link hover:text-luxury-gold transition-colors"
+			>Náš tím</a
+		>
+		<a
+			href="#recenzie"
+			class="menu-link hover:text-luxury-gold transition-colors"
+			>Recenzie</a
+		>
+		<a
+			href="#galeria"
+			class="menu-link hover:text-luxury-gold transition-colors"
+			>Galéria</a
+		>
+		<a
+			href="#kontakt"
+			class="menu-link hover:text-luxury-gold transition-colors"
+			>Kontakt</a
+		>
+		<a
+			href="https://www.bookio.com/sk"
+			target="_blank"
+			class="bg-white text-black px-8 py-3 mt-4">Rezervovať</a
+		>
+
+		<button
+			id="menu-close"
+			class="absolute top-6 right-6 p-2 text-white"
+			aria-label="Zatvoriť menu"
+		>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="32"
+				height="32"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg
+			>
+		</button>
+	</div>
+
+	<ScrollReveal />
+	<slot />
+
+	<!-- JS for Mobile Menu & Smooth Scroll & Animations -->
+	<script is:inline>
+		document.addEventListener('DOMContentLoaded', () => {
+			// Mobile Menu Logic
+			const menuToggle = document.getElementById('menu-toggle')
+			const menuClose = document.getElementById('menu-close')
+			const mobileMenu = document.getElementById('mobile-menu')
+			const menuLinks = document.querySelectorAll('.menu-link')
+
+			function toggleMenu() {
+				mobileMenu?.classList.toggle('translate-x-full')
+				document.body.classList.toggle('overflow-hidden')
+			}
+
+			menuToggle?.addEventListener('click', toggleMenu)
+			menuClose?.addEventListener('click', toggleMenu)
+
+			// Close menu when clicking a link
+			menuLinks.forEach((link) => {
+				link.addEventListener('click', toggleMenu)
+			})
+
+			// Robust Smooth Scroll Shim
+			document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+				anchor.addEventListener('click', function (e) {
+					e.preventDefault()
+					const href = this.getAttribute('href')
+					if (!href || href === '#') return
+
+					const targetElement = document.querySelector(href)
+					if (targetElement) {
+						targetElement.scrollIntoView({
+							behavior: 'smooth',
+						})
+					}
+				})
+			})
+		})
+	</script>
+</html>

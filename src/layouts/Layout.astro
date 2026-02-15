@@ -46,17 +46,17 @@ const {
 		class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5"
 	>
 		<div
-			class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center"
+			class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center relative"
 		>
 			<a
 				href="/"
-				class="text-2xl font-black tracking-tighter text-white hover:text-luxury-gold transition-colors"
+				class="text-2xl font-black tracking-tighter text-white hover:text-luxury-gold transition-colors relative z-20"
 				>BARBER.BA</a
 			>
 
-			<!-- Desktop Menu -->
+			<!-- Desktop Menu (Centered) -->
 			<nav
-				class="hidden md:flex gap-8 text-sm uppercase tracking-widest font-bold text-white"
+				class="hidden md:flex gap-8 text-sm uppercase tracking-widest font-bold text-white absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-auto"
 			>
 				<a
 					href="#cennik"
@@ -83,39 +83,43 @@ const {
 					class="link-underline hover:text-luxury-gold transition-colors"
 					>Kontakt</a
 				>
+			</nav>
+
+			<!-- Right Actions -->
+			<div class="flex items-center gap-4 relative z-20">
 				<a
 					href="https://www.bookio.com/sk"
 					target="_blank"
-					class="bg-luxury-gold text-black px-6 py-2 btn-luxury hover:bg-white transition-colors"
+					class="hidden md:block bg-luxury-gold text-black px-6 py-2 btn-luxury hover:bg-white transition-colors font-bold text-sm uppercase tracking-widest"
 				>
 					Rezervovať
 				</a>
-			</nav>
 
-			<!-- Mobile Menu Button -->
-			<button
-				id="menu-toggle"
-				class="md:hidden text-white p-2"
-				aria-label="Otvoriť menu"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="32"
-					height="32"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					><line x1="4" x2="20" y1="12" y2="12"></line><line
-						x1="4"
-						x2="20"
-						y1="6"
-						y2="6"></line><line x1="4" x2="20" y1="18" y2="18"
-					></line></svg
+				<!-- Mobile Menu Button -->
+				<button
+					id="menu-toggle"
+					class="md:hidden text-white p-2"
+					aria-label="Otvoriť menu"
 				>
-			</button>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="32"
+						height="32"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						><line x1="4" x2="20" y1="12" y2="12"></line><line
+							x1="4"
+							x2="20"
+							y1="6"
+							y2="6"></line><line x1="4" x2="20" y1="18" y2="18"
+						></line></svg
+					>
+				</button>
+			</div>
 		</div>
 	</header>
 

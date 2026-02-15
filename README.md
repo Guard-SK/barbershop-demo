@@ -2,7 +2,7 @@
 
 A high-performance, dark-themed Barber Shop website template built with [Astro](https://astro.build) and [Tailwind CSS](https://tailwindcss.com). Designed for speed (100/100 Lighthouse), accessibility, and premium aesthetics.
 
-![Project Preview](https://via.placeholder.com/800x400?text=Premium+Barber+Shop+Preview)
+![Project Preview](https://barbershop-demo-1.vercel.app)
 
 ## 🚀 Key Features
 

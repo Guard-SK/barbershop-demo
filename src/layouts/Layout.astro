@@ -266,7 +266,7 @@ const homePath = lang === 'en' ? '/en' : '/'
 
 		<!-- JS for Mobile Menu & Smooth Scroll & Animations -->
 		<script is:inline>
-			document.addEventListener('DOMContentLoaded', () => {
+			document.addEventListener('astro:page-load', () => {
 				// Language Auto-Detection
 				const currentPath = window.location.pathname
 				const isEnglishPath = currentPath.startsWith('/en')

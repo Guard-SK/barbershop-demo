@@ -1,20 +1,20 @@
 ---
 export interface Props {
-  title: string;
-  description: string;
-  image?: string;
-  type?: 'website' | 'article';
+  title: string
+  description: string
+  image?: string
+  type?: 'website' | 'article'
 }
 
-const { 
-  title, 
-  description, 
-  image = "/og-image.jpg", 
-  type = 'website' 
-} = Astro.props;
+const {
+  title,
+  description,
+  image = '/og-image.jpg',
+  type = 'website',
+} = Astro.props
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const socialImageURL = new URL(image, Astro.url);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const socialImageURL = new URL(image, Astro.url)
 ---
 
 <!-- Global Metadata -->
@@ -70,13 +70,7 @@ const socialImageURL = new URL(image, Astro.url);
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday"
-        ],
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
         "opens": "10:00",
         "closes": "20:00"
       },

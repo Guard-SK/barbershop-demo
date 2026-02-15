@@ -1,8 +1,10 @@
 ---
+import '@fontsource/inter/300.css'
 import '@fontsource/inter/400.css'
 import '@fontsource/inter/500.css'
 import '@fontsource/inter/600.css'
 import '@fontsource/inter/700.css'
+import '@fontsource/inter/900.css'
 import '@fontsource/oswald/400.css'
 import '@fontsource/oswald/500.css'
 import '@fontsource/oswald/600.css'
@@ -13,6 +15,8 @@ import ScrollReveal from '../components/ScrollReveal.astro'
 import '../styles/global.css'
 import { getImage } from 'astro:assets'
 import heroImage from '../assets/hero.avif'
+import { ViewTransitions } from 'astro:transitions'
+import { useTranslations } from '../i18n/utils'
 
 const optimizedHero = await getImage({
 	src: heroImage,
@@ -25,199 +29,323 @@ interface Props {
 	title: string
 	description?: string
 	image?: string
+	lang?: 'sk' | 'en'
 }
 
 const {
 	title,
 	description = 'Premium Barber Shop in Bratislava.',
 	image,
+	lang = 'sk',
 } = Astro.props
+const t = useTranslations(lang)
+
+const homePath = lang === 'en' ? '/en' : '/'
 ---
 
 <!doctype html>
-<html lang="sk">
+<html lang={lang} class="scroll-smooth">
 	<head>
-		<SEO title={title} description={description} image={image} />
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+
+		<ViewTransitions />
 		<!-- Preload Hero Image for LCP -->
 		<link rel="preload" as="image" href={optimizedHero.src} />
 	</head>
-	<!-- Navigation -->
-	<header
-		class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5"
-	>
+	<body class="bg-black text-white antialiased">
+		<!-- Navigation -->
+		<header
+			class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/5"
+		>
+			<div
+				class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center relative"
+			>
+				<a
+					href={homePath}
+					class="text-2xl font-black tracking-tighter text-white hover:text-luxury-gold transition-colors relative z-20"
+					>BARBER.BA</a
+				>
+
+				<!-- Desktop Menu (Centered) -->
+				<nav
+					class="hidden md:flex gap-8 text-sm uppercase tracking-widest font-bold text-white absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-auto"
+				>
+					<a
+						href="#cennik"
+						class="link-underline hover:text-luxury-gold transition-colors"
+						>{t('nav.services')}</a
+					>
+					<a
+						href="#nas-tim"
+						class="link-underline hover:text-luxury-gold transition-colors"
+						>{t('nav.barbers')}</a
+					>
+					<a
+						href="#recenzie"
+						class="link-underline hover:text-luxury-gold transition-colors"
+						>{t('nav.reviews')}</a
+					>
+					<a
+						href="#galeria"
+						class="link-underline hover:text-luxury-gold transition-colors"
+						>{t('nav.gallery')}</a
+					>
+					<a
+						href="#kontakt"
+						class="link-underline hover:text-luxury-gold transition-colors"
+						>{t('nav.contact')}</a
+					>
+				</nav>
+
+				<!-- Right Actions -->
+				<div class="flex items-center gap-4 relative z-20">
+					<!-- Language Switcher -->
+					<div
+						class="hidden md:flex items-center gap-2 text-sm font-bold tracking-widest text-neutral-500"
+					>
+						<a
+							href="/"
+							class={`transition-colors hover:text-white ${lang === 'sk' ? 'text-white' : ''}`}
+							>SK</a
+						>
+						<span>/</span>
+						<a
+							href="/en"
+							class={`transition-colors hover:text-white ${lang === 'en' ? 'text-white' : ''}`}
+							>EN</a
+						>
+					</div>
+
+					<a
+						href="https://www.bookio.com/sk"
+						target="_blank"
+						class="hidden md:block bg-luxury-gold text-black px-6 py-2 btn-luxury hover:bg-white transition-colors font-bold text-sm uppercase tracking-widest"
+					>
+						{t('nav.book')}
+					</a>
+
+					<!-- Mobile Menu Button -->
+					<button
+						id="menu-toggle"
+						class="md:hidden text-white p-2"
+						aria-label="Menu"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="32"
+							height="32"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							><line x1="4" x2="20" y1="12" y2="12"></line><line
+								x1="4"
+								x2="20"
+								y1="6"
+								y2="6"></line><line
+								x1="4"
+								x2="20"
+								y1="18"
+								y2="18"></line></svg
+						>
+					</button>
+				</div>
+			</div>
+		</header>
+
+		<!-- Mobile Menu Overlay (Moved outside header for full height) -->
 		<div
-			class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center relative"
+			id="mobile-menu"
+			class="fixed inset-0 bg-black z-[100] flex flex-col items-center justify-center gap-8 text-2xl font-black uppercase tracking-tighter translate-x-full transition-transform duration-300 overflow-hidden text-white"
 		>
 			<a
-				href="/"
-				class="text-2xl font-black tracking-tighter text-white hover:text-luxury-gold transition-colors relative z-20"
-				>BARBER.BA</a
+				href="#cennik"
+				class="menu-link hover:text-luxury-gold transition-colors"
+				>{t('nav.services')}</a
+			>
+			<a
+				href="#nas-tim"
+				class="menu-link hover:text-luxury-gold transition-colors"
+				>{t('nav.barbers')}</a
+			>
+			<a
+				href="#recenzie"
+				class="menu-link hover:text-luxury-gold transition-colors"
+				>{t('nav.reviews')}</a
+			>
+			<a
+				href="#galeria"
+				class="menu-link hover:text-luxury-gold transition-colors"
+				>{t('nav.gallery')}</a
+			>
+			<a
+				href="#kontakt"
+				class="menu-link hover:text-luxury-gold transition-colors"
+				>{t('nav.contact')}</a
 			>
 
-			<!-- Desktop Menu (Centered) -->
-			<nav
-				class="hidden md:flex gap-8 text-sm uppercase tracking-widest font-bold text-white absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-auto"
-			>
+			<div class="flex items-center gap-6 mt-4">
 				<a
-					href="#cennik"
-					class="link-underline hover:text-luxury-gold transition-colors"
-					>Cenník</a
+					href="/"
+					class={`text-xl transition-colors ${lang === 'sk' ? 'text-luxury-gold' : 'text-neutral-500'}`}
+					>SK</a
 				>
+				<span class="text-neutral-700">|</span>
 				<a
-					href="#nas-tim"
-					class="link-underline hover:text-luxury-gold transition-colors"
-					>Náš tím</a
+					href="/en"
+					class={`text-xl transition-colors ${lang === 'en' ? 'text-luxury-gold' : 'text-neutral-500'}`}
+					>EN</a
 				>
-				<a
-					href="#recenzie"
-					class="link-underline hover:text-luxury-gold transition-colors"
-					>Recenzie</a
-				>
-				<a
-					href="#galeria"
-					class="link-underline hover:text-luxury-gold transition-colors"
-					>Galéria</a
-				>
-				<a
-					href="#kontakt"
-					class="link-underline hover:text-luxury-gold transition-colors"
-					>Kontakt</a
-				>
-			</nav>
-
-			<!-- Right Actions -->
-			<div class="flex items-center gap-4 relative z-20">
-				<a
-					href="https://www.bookio.com/sk"
-					target="_blank"
-					class="hidden md:block bg-luxury-gold text-black px-6 py-2 btn-luxury hover:bg-white transition-colors font-bold text-sm uppercase tracking-widest"
-				>
-					Rezervovať
-				</a>
-
-				<!-- Mobile Menu Button -->
-				<button
-					id="menu-toggle"
-					class="md:hidden text-white p-2"
-					aria-label="Otvoriť menu"
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="32"
-						height="32"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						><line x1="4" x2="20" y1="12" y2="12"></line><line
-							x1="4"
-							x2="20"
-							y1="6"
-							y2="6"></line><line x1="4" x2="20" y1="18" y2="18"
-						></line></svg
-					>
-				</button>
 			</div>
-		</div>
-	</header>
 
-	<!-- Mobile Menu Overlay (Moved outside header for full height) -->
-	<div
-		id="mobile-menu"
-		class="fixed inset-0 bg-black z-[100] flex flex-col items-center justify-center gap-8 text-2xl font-black uppercase tracking-tighter translate-x-full transition-transform duration-300 overflow-hidden text-white"
-	>
-		<a
-			href="#cennik"
-			class="menu-link hover:text-luxury-gold transition-colors">Cenník</a
-		>
-		<a
-			href="#nas-tim"
-			class="menu-link hover:text-luxury-gold transition-colors"
-			>Náš tím</a
-		>
-		<a
-			href="#recenzie"
-			class="menu-link hover:text-luxury-gold transition-colors"
-			>Recenzie</a
-		>
-		<a
-			href="#galeria"
-			class="menu-link hover:text-luxury-gold transition-colors"
-			>Galéria</a
-		>
-		<a
-			href="#kontakt"
-			class="menu-link hover:text-luxury-gold transition-colors"
-			>Kontakt</a
-		>
-		<a
-			href="https://www.bookio.com/sk"
-			target="_blank"
-			class="bg-white text-black px-8 py-3 mt-4">Rezervovať</a
-		>
-
-		<button
-			id="menu-close"
-			class="absolute top-6 right-6 p-2 text-white"
-			aria-label="Zatvoriť menu"
-		>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				width="32"
-				height="32"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg
+			<a
+				href="https://www.bookio.com/sk"
+				target="_blank"
+				class="bg-white text-black px-8 py-3 mt-4">{t('nav.book')}</a
 			>
-		</button>
-	</div>
 
-	<ScrollReveal />
-	<slot />
+			<button
+				id="menu-close"
+				class="absolute top-6 right-6 p-2 text-white"
+				aria-label="Zatvoriť menu"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="32"
+					height="32"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					><path d="M18 6 6 18"></path><path d="m6 6 12 12"
+					></path></svg
+				>
+			</button>
+		</div>
 
-	<!-- JS for Mobile Menu & Smooth Scroll & Animations -->
-	<script is:inline>
-		document.addEventListener('DOMContentLoaded', () => {
-			// Mobile Menu Logic
-			const menuToggle = document.getElementById('menu-toggle')
-			const menuClose = document.getElementById('menu-close')
-			const mobileMenu = document.getElementById('mobile-menu')
-			const menuLinks = document.querySelectorAll('.menu-link')
+		<ScrollReveal />
+		<slot />
 
-			function toggleMenu() {
-				mobileMenu?.classList.toggle('translate-x-full')
-				document.body.classList.toggle('overflow-hidden')
-			}
+		<footer
+			class="bg-black text-white py-12 border-t border-white/10 relative z-20"
+		>
+			<div
+				class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left"
+			>
+				<div class="text-neutral-500 text-sm tracking-wider">
+					&copy; {new Date().getFullYear()} BARBER.BA <span
+						class="hidden md:inline mx-2">|</span
+					>
+					<span class="block md:inline mt-1 md:mt-0"
+						>{t('footer.rights')}</span
+					>
+				</div>
 
-			menuToggle?.addEventListener('click', toggleMenu)
-			menuClose?.addEventListener('click', toggleMenu)
+				<div class="text-neutral-500 text-sm font-medium tracking-wide">
+					{t('footer.designed')}
+					<a
+						href="https://www.instagram.com/zlidavid/"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="text-white hover:text-luxury-gold transition-colors ml-1 font-bold underline-offset-4 hover:underline"
+					>
+						Dávid Zliechovec
+					</a>
+				</div>
+			</div>
+		</footer>
 
-			// Close menu when clicking a link
-			menuLinks.forEach((link) => {
-				link.addEventListener('click', toggleMenu)
-			})
+		<!-- JS for Mobile Menu & Smooth Scroll & Animations -->
+		<script is:inline>
+			document.addEventListener('DOMContentLoaded', () => {
+				// Language Auto-Detection
+				const currentPath = window.location.pathname
+				const isEnglishPath = currentPath.startsWith('/en')
+				const storageKey = 'barber-lang'
+				const storedLang = localStorage.getItem(storageKey)
+				const browserLang = navigator.language || navigator.userLanguage
+				const isEnglishBrowser = browserLang.startsWith('en')
 
-			// Robust Smooth Scroll Shim
-			document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-				anchor.addEventListener('click', function (e) {
-					e.preventDefault()
-					const href = this.getAttribute('href')
-					if (!href || href === '#') return
-
-					const targetElement = document.querySelector(href)
-					if (targetElement) {
-						targetElement.scrollIntoView({
-							behavior: 'smooth',
-						})
+				// Redirect Logic (Only on landing pages to avoid loops)
+				if (
+					currentPath === '/' ||
+					currentPath === '/en' ||
+					currentPath === '/en/'
+				) {
+					if (!storedLang) {
+						if (isEnglishBrowser && !isEnglishPath) {
+							// Users default is English, but visited SK -> Redirect EN
+							window.location.href = '/en'
+						}
+						// If user is SK (default) and visited EN?
+						// We assume they want EN if they manually went there, unless we want to force localized.
+						// Let's only force EN redirect if browser is EN and we are on SK root.
+					} else {
+						if (storedLang === 'en' && !isEnglishPath) {
+							window.location.href = '/en'
+						} else if (storedLang === 'sk' && isEnglishPath) {
+							window.location.href = '/'
+						}
 					}
+				}
+
+				// Attach click listeners to Language Switchers to save preference
+				document
+					.querySelectorAll('a[href="/"], a[href="/en"]')
+					.forEach((link) => {
+						link.addEventListener('click', (e) => {
+							const href = link.getAttribute('href')
+							if (href === '/en')
+								localStorage.setItem(storageKey, 'en')
+							if (href === '/')
+								localStorage.setItem(storageKey, 'sk')
+						})
+					})
+
+				// Mobile Menu Logic
+				const menuToggle = document.getElementById('menu-toggle')
+				const menuClose = document.getElementById('menu-close')
+				const mobileMenu = document.getElementById('mobile-menu')
+				const menuLinks = document.querySelectorAll('.menu-link')
+
+				function toggleMenu() {
+					mobileMenu?.classList.toggle('translate-x-full')
+					document.body.classList.toggle('overflow-hidden')
+				}
+
+				menuToggle?.addEventListener('click', toggleMenu)
+				menuClose?.addEventListener('click', toggleMenu)
+
+				// Close menu when clicking a link
+				menuLinks.forEach((link) => {
+					link.addEventListener('click', toggleMenu)
+				})
+
+				// Robust Smooth Scroll Shim
+				document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+					anchor.addEventListener('click', function (e) {
+						e.preventDefault()
+						const href = this.getAttribute('href')
+						if (!href || href === '#') return
+
+						const targetElement = document.querySelector(href)
+						if (targetElement) {
+							targetElement.scrollIntoView({
+								behavior: 'smooth',
+							})
+						}
+					})
 				})
 			})
-		})
-	</script>
+		</script>
+	</body>
 </html>

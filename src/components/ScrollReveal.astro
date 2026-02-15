@@ -3,11 +3,11 @@
 ---
 
 <script is:inline>
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('astro:page-load', () => {
         const observerOptions = {
             root: null,
             rootMargin: '0px',
-            threshold: 0.25,
+            threshold: 0.1, // Lower threshold for better mobile trigger
         }
 
         const observer = new IntersectionObserver((entries, observer) => {

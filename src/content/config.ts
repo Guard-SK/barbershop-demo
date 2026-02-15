@@ -10,6 +10,7 @@ const services = defineCollection({
         tier: z.enum(['master', 'senior', 'junior']).optional(),
         featured: z.boolean().default(false),
         order: z.number().default(100),
+        lang: z.enum(['sk', 'en']).default('sk'),
     }),
 });
 
@@ -22,6 +23,7 @@ const barbers = defineCollection({
         instagram: z.string().optional(),
         image: image().optional(),
         order: z.number().default(100),
+        lang: z.enum(['sk', 'en']).default('sk'),
     }),
 });
 
@@ -33,6 +35,7 @@ const reviews = defineCollection({
         text: z.string(),
         date: z.string(),
         service: z.string().optional(),
+        lang: z.enum(['sk', 'en']).default('sk'),
     }),
 });
 

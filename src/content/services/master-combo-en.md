@@ -1,4 +1,5 @@
 ---
+slug: "master-combo-en"
 title: "Master Combo"
 price: "45 €"
 duration: "60 min"

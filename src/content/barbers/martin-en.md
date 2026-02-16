@@ -1,4 +1,5 @@
 ---
+slug: "martin-en"
 name: "Martin"
 role: "Senior Barber"
 bio: "A modern cut must have soul. I search for the balance between classics and new trends."

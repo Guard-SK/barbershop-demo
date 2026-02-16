@@ -1,4 +1,5 @@
 ---
+slug: "senior-beard-en"
 title: "Senior Beard"
 price: "20 €"
 duration: "30 min"

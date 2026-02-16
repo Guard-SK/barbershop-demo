@@ -1,4 +1,5 @@
 ---
+slug: "junior-beard-en"
 title: "Junior Beard"
 price: "15 €"
 duration: "45 min"

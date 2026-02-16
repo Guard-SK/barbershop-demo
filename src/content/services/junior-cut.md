@@ -1,4 +1,5 @@
 ---
+slug: "junior-cut"
 title: "Junior Strih"
 price: "25 €"
 duration: "60 min"

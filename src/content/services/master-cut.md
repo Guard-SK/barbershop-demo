@@ -1,4 +1,5 @@
 ---
+slug: "master-cut"
 title: "Master Strih"
 price: "35 €"
 duration: "45 min"

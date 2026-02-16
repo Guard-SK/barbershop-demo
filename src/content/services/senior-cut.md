@@ -1,4 +1,5 @@
 ---
+slug: "senior-cut"
 title: "Senior Strih"
 price: "30 €"
 duration: "45 min"

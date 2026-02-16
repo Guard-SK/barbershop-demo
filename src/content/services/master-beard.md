@@ -1,4 +1,5 @@
 ---
+slug: "master-beard"
 title: "Master Brada"
 price: "25 €"
 duration: "30 min"

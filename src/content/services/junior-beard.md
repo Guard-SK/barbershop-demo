@@ -1,4 +1,5 @@
 ---
+slug: "junior-beard"
 title: "Junior Brada"
 price: "15 €"
 duration: "45 min"

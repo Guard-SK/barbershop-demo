@@ -1,4 +1,5 @@
 ---
+slug: "senior-cut-en"
 title: "Senior Cut"
 price: "30 €"
 duration: "45 min"

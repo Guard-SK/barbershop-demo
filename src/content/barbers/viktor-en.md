@@ -1,4 +1,5 @@
 ---
+slug: "viktor-en"
 name: "Viktor"
 role: "Junior Barber"
 bio: "Every head is a different challenge. I learn from the best and push my limits every day."

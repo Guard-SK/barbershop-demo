@@ -1,4 +1,5 @@
 ---
+slug: "master-cut-en"
 title: "Master Cut"
 price: "35 €"
 duration: "45 min"

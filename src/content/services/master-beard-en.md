@@ -1,4 +1,5 @@
 ---
+slug: "master-beard-en"
 title: "Master Beard"
 price: "25 €"
 duration: "30 min"

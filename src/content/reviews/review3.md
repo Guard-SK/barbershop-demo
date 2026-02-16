@@ -1,4 +1,5 @@
 ---
+slug: "review3"
 name: "Peter S."
 rating: 5
 text: "Perfektný servis, drink na privítanie a precízna práca. Cítil som sa ako kráľ. Určite sa vrátim."

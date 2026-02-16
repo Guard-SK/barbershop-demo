@@ -1,4 +1,5 @@
 ---
+slug: "junior-combo-en"
 title: "Junior Combo"
 price: "35 €"
 duration: "90 min"

@@ -1,4 +1,5 @@
 ---
+slug: "senior-combo-en"
 title: "Senior Combo"
 price: "40 €"
 duration: "60 min"

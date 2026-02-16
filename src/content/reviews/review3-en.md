@@ -1,4 +1,5 @@
 ---
+slug: "review3-en"
 name: "Peter S."
 rating: 5
 text: "Great vibe and professional staff. Viktor did a great job with my fade. Will definitely come back."

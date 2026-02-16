@@ -1,4 +1,5 @@
 ---
+slug: "alex-en"
 name: "Alex"
 role: "Master Barber"
 bio: "Barbering isn't just about cutting, it's about how the client feels when they leave. Every detail counts."

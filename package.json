@@ -10,10 +10,18 @@
         "astro": "astro"
     },
     "dependencies": {
+        "@astrojs/react": "^4.4.2",
         "@astrojs/tailwind": "^5.1.0",
+        "@astrojs/vercel": "^9.0.4",
         "@fontsource/inter": "^5.2.8",
         "@fontsource/oswald": "^5.2.8",
+        "@keystatic/astro": "^5.0.6",
+        "@keystatic/core": "^0.5.48",
+        "@types/react": "^19.2.14",
+        "@types/react-dom": "^19.2.3",
         "astro": "^5.0.0",
+        "react": "^19.2.4",
+        "react-dom": "^19.2.4",
         "tailwindcss": "^3.4.1"
     },
     "devDependencies": {

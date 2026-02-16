@@ -1,4 +1,5 @@
 ---
+slug: "viktor"
 name: "Viktor"
 role: "Junior Barber"
 bio: "\"Každá hlava je iná výzva. Učím sa od najlepších a posúvam svoje hranice každý deň.\""

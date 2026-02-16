@@ -1,4 +1,5 @@
 ---
+slug: "review1"
 name: "Marek K."
 rating: 5
 text: "Najlepší barber v meste. Chodím sem už rok a vždy odchádzam spokojný. Skvelá atmosféra a profesionálny prístup."

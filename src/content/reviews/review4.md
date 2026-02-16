@@ -1,4 +1,5 @@
 ---
+slug: "review4"
 name: "Jakub L."
 rating: 5
 text: "Viktor síce Junior, ale strihá lepšie ako 'seniori' inde. Veľmi detailná práca a super pokec."

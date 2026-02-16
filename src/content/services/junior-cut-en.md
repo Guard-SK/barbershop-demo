@@ -1,4 +1,5 @@
 ---
+slug: "junior-cut-en"
 title: "Junior Cut"
 price: "25 €"
 duration: "60 min"

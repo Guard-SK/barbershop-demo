@@ -1,4 +1,5 @@
 ---
+slug: "alex"
 name: "Alex"
 role: "Master Barber"
 bio: "\"Barbering nie je len o strihaní, je to o tom, ako sa klient cíti, keď odchádza. Každý detail sa počíta.\""

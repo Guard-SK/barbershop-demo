@@ -1,4 +1,5 @@
 ---
+slug: "review2"
 name: "Tomáš H."
 rating: 5
 text: "Alex je majster svojho remesla. Strih presne podľa predstáv a úprava brady na jednotku. Odporúčam!"

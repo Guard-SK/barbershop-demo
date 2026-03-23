@@ -1,0 +1,441 @@
+---
+import desktopVideo from '../assets/BooqmePreviewDesktop.mp4'
+import phoneVideo from '../assets/BooqmePreviewPhone.mp4'
+import { useTranslations } from '../i18n/utils'
+
+interface Props {
+  lang: 'sk' | 'en'
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang)
+---
+
+<dialog
+  id="booking-demo-modal"
+  class="bg-transparent m-auto p-0 border-none w-full max-w-5xl overflow-visible backdrop:bg-black/90 backdrop:backdrop-blur-md"
+>
+  <div
+    class="relative w-full rounded-2xl bg-neutral-900 border border-white/10 shadow-2xl shadow-luxury-gold/5 overflow-hidden flex flex-col transform transition-all duration-500 opacity-0 scale-95"
+    id="modal-content"
+  >
+    <!-- Header / Showcase Toggle -->
+    <div
+      class="flex items-center justify-between p-4 md:p-6 border-b border-white/5 bg-black/50 relative"
+    >
+      <!-- Left: Brand/Title -->
+      <div class="flex items-center gap-2 md:gap-4 min-w-0">
+        <span
+          class="px-2 py-0.5 rounded bg-luxury-gold/10 border border-luxury-gold/20 text-luxury-gold text-[9px] md:text-[10px] font-bold uppercase tracking-widest whitespace-nowrap"
+          >Showcase</span
+        >
+        <h3
+          class="text-white font-bold tracking-tight sm:tracking-normal md:text-xl uppercase text-[10px] sm:text-xs truncate"
+        >
+          {lang === 'sk' ? 'Rezervačný Systém' : 'Reservation System'}
+        </h3>
+      </div>
+
+      <!-- Right: Controls -->
+      <div class="flex items-center gap-2 md:gap-6 ml-2 md:ml-4 shrink-0">
+        <!-- Switcher -->
+        <div
+          class="flex items-center bg-black/60 rounded-full p-1 border border-white/10 shadow-inner overflow-hidden"
+        >
+          <button
+            data-view="mobile"
+            class="view-toggle px-2.5 md:px-5 py-1.5 md:py-2 rounded-full text-[9px] md:text-xs font-bold uppercase tracking-widest transition-all text-black bg-luxury-gold flex items-center justify-center gap-1.5 md:gap-2 shadow-lg shadow-luxury-gold/10"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="md:w-4 md:h-4"
+              ><rect width="14" height="20" x="5" y="2" rx="2" ry="2"
+              ></rect><path d="M12 18h.01"></path></svg
+            >
+            <span class="hidden md:inline">Mobile</span>
+          </button>
+          <button
+            data-view="desktop"
+            class="view-toggle px-2.5 md:px-5 py-1.5 md:py-2 rounded-full text-[9px] md:text-xs font-bold uppercase tracking-widest transition-all text-neutral-400 hover:text-white bg-transparent flex items-center justify-center gap-1.5 md:gap-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="md:w-4 md:h-4"
+              ><rect width="20" height="14" x="2" y="3" rx="2" ry="2"
+              ></rect><line x1="8" y1="21" x2="16" y2="21"></line><line
+                x1="12"
+                y1="17"
+                x2="12"
+                y2="21"></line></svg
+            >
+            <span class="hidden md:inline">Desktop</span>
+          </button>
+        </div>
+
+        <div class="w-px h-6 bg-white/10 hidden sm:block"></div>
+
+        <!-- Close -->
+        <button
+          id="close-modal"
+          class="text-neutral-500 hover:text-white transition-colors p-1 md:p-2"
+          aria-label="Close modal"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="md:w-6 md:h-6"
+            ><line x1="18" y1="6" x2="6" y2="18"></line><line
+              x1="6"
+              y1="6"
+              x2="18"
+              y2="18"></line></svg
+          >
+        </button>
+      </div>
+    </div>
+
+    <!-- Video Container -->
+    <div
+      class="relative bg-black flex items-center justify-center p-4 md:p-12 min-h-[60vh] overflow-hidden"
+      id="video-container"
+    >
+      <!-- Premium Radial Glow -->
+      <div class="absolute inset-0 pointer-events-none overflow-hidden">
+        <!-- Large soft glow -->
+        <div
+          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[radial-gradient(circle_at_center,rgba(198,168,124,0.15)_0%,transparent_80%)] blur-3xl"
+        >
+        </div>
+        <!-- Tighter, brighter glow directly behind the device -->
+        <div
+          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-[radial-gradient(circle_at_center,rgba(198,168,124,0.25)_0%,transparent_60%)] blur-2xl"
+        >
+        </div>
+      </div>
+      <!-- Premium Mobile Frame -->
+      <div
+        id="view-mobile"
+        class="relative w-full max-w-[320px] mx-auto aspect-[9/17] rounded-[2.6rem] border-[9px] border-neutral-900 bg-black shadow-2xl overflow-hidden transition-all duration-300 opacity-100 translate-y-0 ring-1 ring-white/10 group/phone"
+      >
+        <!-- Physical Side Buttons -->
+        <div
+          class="absolute -left-[10px] top-28 w-[3px] h-8 bg-neutral-800 rounded-l-md border-y border-l border-white/5"
+        >
+        </div>
+        <!-- Volume Up -->
+        <div
+          class="absolute -left-[10px] top-40 w-[3px] h-8 bg-neutral-800 rounded-l-md border-y border-l border-white/5"
+        >
+        </div>
+        <!-- Volume Down -->
+        <div
+          class="absolute -right-[10px] top-36 w-[3px] h-14 bg-neutral-800 rounded-r-md border-y border-r border-white/5"
+        >
+        </div>
+        <!-- Power -->
+
+        <!-- Screen Content Container -->
+        <div
+          class="relative w-full h-full bg-black flex flex-col pt-14 overflow-hidden"
+        >
+          <!-- Dynamic Island Notch -->
+          <div
+            class="absolute left-1/2 -translate-x-1/2 top-5 w-24 h-6 bg-black rounded-full z-20 border border-white/10 flex items-center justify-center gap-1.5 shadow-inner"
+          >
+            <div
+              class="w-1.5 h-1.5 rounded-full bg-[#0a0a0a] border border-white/5 ring-1 ring-blue-500/10"
+            >
+            </div>
+            <div
+              class="w-9 h-1 bg-[#0a0a0a] rounded-full border border-white/5"
+            >
+            </div>
+          </div>
+
+          <!-- Status Bar Simulation -->
+          <div
+            class="absolute top-0 left-0 w-full flex justify-between items-center px-8 pt-6 pb-2 text-[10px] font-bold text-white/30 z-10 tracking-tight"
+          >
+            <span>9:41</span>
+            <div class="flex items-center gap-1.5">
+              <svg
+                class="w-2.5 h-2.5"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"><path d="M12 21l-12-18h24z"></path></svg
+              >
+              <svg
+                class="w-3.5 h-3.5"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                ><path
+                  d="M17 5H3a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2V7a2 2 0 00-2-2zM21 9v6M17 7v10H3V7h14z"
+                ></path></svg
+              >
+            </div>
+          </div>
+
+          <!-- The Video -->
+          <video
+            id="video-mobile"
+            src={phoneVideo}
+            class="w-full h-full object-cover bg-black"
+            preload="none"
+            muted
+            loop
+            playsinline></video>
+
+          <!-- Glass Screen Reflection Shine -->
+          <div
+            class="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/[0.03] to-white/[0.05] opacity-100 transition-opacity duration-700"
+          >
+          </div>
+
+          <!-- Bottom Indicator Bar -->
+          <div
+            class="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-24 h-1 bg-white/10 rounded-full"
+          >
+          </div>
+        </div>
+      </div>
+
+      <!-- Desktop Frame -->
+      <div
+        id="view-desktop"
+        class="hidden relative w-full max-w-5xl mx-auto rounded-xl border border-white/10 bg-neutral-900 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex-col transition-all duration-300 opacity-0 translate-y-4 ring-1 ring-white/5"
+      >
+        <!-- Window Header -->
+        <div
+          class="h-10 bg-black/40 backdrop-blur-md border-b border-white/5 flex items-center px-4 gap-2 shrink-0 rounded-t-xl"
+        >
+          <div class="flex gap-2">
+            <div
+              class="w-3 h-3 rounded-full bg-neutral-800 border border-white/5"
+            >
+            </div>
+            <div
+              class="w-3 h-3 rounded-full bg-neutral-800 border border-white/5"
+            >
+            </div>
+            <div
+              class="w-3 h-3 rounded-full bg-neutral-800 border border-white/5"
+            >
+            </div>
+          </div>
+          <div class="flex-1 text-center mr-10">
+            <span
+              class="text-[9px] text-white/20 uppercase tracking-[0.3em] font-black"
+              >Booqme Reservation System</span
+            >
+          </div>
+        </div>
+        <!-- Window Body -->
+        <div
+          class="flex-1 relative bg-black aspect-video overflow-hidden rounded-b-xl"
+        >
+          <video
+            id="video-desktop"
+            src={desktopVideo}
+            class="absolute inset-0 w-full h-full"
+            preload="none"
+            muted
+            loop
+            playsinline></video>
+        </div>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  function initVideoModal() {
+    const modal = document.getElementById(
+      'booking-demo-modal',
+    ) as HTMLDialogElement
+    if (!modal) return
+
+    const closeBtn = document.getElementById('close-modal')
+    const triggers = document.querySelectorAll('.data-video-trigger')
+    const modalContent = document.getElementById('modal-content')
+
+    const views = {
+      mobile: document.getElementById('view-mobile'),
+      desktop: document.getElementById('view-desktop'),
+    }
+
+    const videos = {
+      mobile: document.getElementById('video-mobile') as HTMLVideoElement,
+      desktop: document.getElementById('video-desktop') as HTMLVideoElement,
+    }
+
+    const toggles = document.querySelectorAll('.view-toggle')
+    let currentView = ''
+
+    function setView(viewName: 'mobile' | 'desktop', animate = true) {
+      if (viewName === currentView) return
+
+      const newBtn = document.querySelector(
+        `.view-toggle[data-view="${viewName}"]`,
+      ) as HTMLButtonElement
+      if (!newBtn) return
+
+      // Update toggle buttons active state
+      toggles.forEach((t) => {
+        if (t === newBtn) {
+          t.classList.remove(
+            'text-neutral-400',
+            'hover:text-white',
+            'bg-transparent',
+          )
+          t.classList.add('text-black', 'bg-luxury-gold')
+        } else {
+          t.classList.add(
+            'text-neutral-400',
+            'hover:text-white',
+            'bg-transparent',
+          )
+          t.classList.remove('text-black', 'bg-luxury-gold')
+        }
+      })
+
+      const activeView = views[viewName]
+      const inactiveViewName = viewName === 'mobile' ? 'desktop' : 'mobile'
+      const inactiveView = views[inactiveViewName as keyof typeof views]
+      const activeVideo = videos[viewName]
+      const inactiveVideo = videos[inactiveViewName as keyof typeof videos]
+
+      if (!animate || !currentView) {
+        // Instant switch (for initial load)
+        if (inactiveView) {
+          inactiveView.classList.add('hidden')
+          inactiveView.classList.remove('flex', 'opacity-100', 'translate-y-0')
+          inactiveView.classList.add('opacity-0', 'translate-y-4')
+        }
+
+        activeView!.classList.remove('hidden', 'opacity-0', 'translate-y-4')
+        if (viewName === 'desktop') activeView!.classList.add('flex')
+        activeView!.classList.add('opacity-100', 'translate-y-0')
+      } else {
+        // Fade out inactive
+        inactiveView!.classList.remove('opacity-100', 'translate-y-0')
+        inactiveView!.classList.add('opacity-0', 'translate-y-4')
+
+        setTimeout(() => {
+          inactiveView!.classList.add('hidden')
+          inactiveView!.classList.remove('flex') // Remove flex if desktop
+          inactiveVideo!.pause()
+
+          activeView!.classList.remove('hidden')
+          if (viewName === 'desktop') {
+            activeView!.classList.add('flex')
+          }
+
+          // Force reflow
+          void activeView!.offsetWidth
+
+          activeView!.classList.remove('opacity-0', 'translate-y-4')
+          activeView!.classList.add('opacity-100', 'translate-y-0')
+
+          // Ensure it auto-plays when switched if the modal is currently open
+          if (modal.open) activeVideo!.play()
+        }, 300)
+      }
+
+      currentView = viewName
+    }
+
+    // Auto-detect based on window width (Desktop if >= 1024px)
+    const isDesktop = window.innerWidth >= 1024
+    setView(isDesktop ? 'desktop' : 'mobile', false)
+
+    function openModal(e: Event) {
+      e.preventDefault()
+      modal.showModal()
+
+      // Prevent background scrolling
+      document.body.style.overflow = 'hidden'
+
+      // Setup animation
+      setTimeout(() => {
+        modalContent!.classList.remove('opacity-0', 'scale-95')
+        modalContent!.classList.add('opacity-100', 'scale-100')
+      }, 10)
+
+      // Play current video
+      videos[currentView as keyof typeof videos]?.play()
+    }
+
+    function closeModal() {
+      modalContent!.classList.remove('opacity-100', 'scale-100')
+      modalContent!.classList.add('opacity-0', 'scale-95')
+
+      // Restore background scrolling
+      document.body.style.overflow = ''
+
+      // Wait for animation to finish
+      setTimeout(() => {
+        modal.close()
+        videos.mobile?.pause()
+        videos.desktop?.pause()
+      }, 300)
+    }
+
+    triggers.forEach((trigger) => trigger.addEventListener('click', openModal))
+    closeBtn?.addEventListener('click', closeModal)
+
+    // Close on outside click or escape
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal()
+      }
+    })
+
+    // Also listen to close event (e.g. via ESC key)
+    modal.addEventListener('close', () => {
+      document.body.style.overflow = ''
+      videos.mobile?.pause()
+      videos.desktop?.pause()
+    })
+
+    // Handle Switch
+    toggles.forEach((toggle) => {
+      toggle.addEventListener('click', (e) => {
+        const btn = e.currentTarget as HTMLButtonElement
+        const viewName = btn.dataset.view as 'mobile' | 'desktop'
+        setView(viewName, true)
+      })
+    })
+  }
+
+  // Run on load and after ViewTransitions
+  document.addEventListener('astro:page-load', initVideoModal)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVideoModal)
+  } else {
+    initVideoModal()
+  }
+</script>

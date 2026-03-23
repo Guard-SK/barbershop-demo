@@ -11,6 +11,7 @@ import gallery5 from '../assets/gallery/gallery5.webp'
 import gallery6 from '../assets/gallery/gallery6.webp'
 import ReviewMarquee from '../components/ReviewMarquee.astro';
 import CTASection from '../components/CTASection.astro';
+import VideoModal from '../components/VideoModal.astro';
 import { useTranslations } from '../i18n/utils';
 
 interface Props {
@@ -84,15 +85,13 @@ const barbers = await getCollection('barbers', ({ data }) => data.lang === lang)
 
 				<div class="flex flex-col gap-8 animate-fade-in-up delay-500 items-center md:items-start">
                     <!-- Standard CTA Button -->
-					<a
-						href="https://booqme.sk/barberba"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="group relative inline-flex items-center justify-center px-8 py-4 bg-luxury-gold text-black font-black uppercase tracking-widest text-sm overflow-hidden transition-transform hover:scale-105 w-full md:w-fit"
+					<button
+						class="data-video-trigger group relative inline-flex items-center justify-center px-8 py-4 bg-luxury-gold text-black font-black uppercase tracking-widest text-sm overflow-hidden transition-transform hover:scale-105 w-full md:w-fit"
+						aria-label={t('hero.cta')}
 					>
                         <span class="relative z-10 group-hover:text-black transition-colors">{t('hero.cta')}</span>
                         <div class="absolute inset-0 bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out"></div>
-					</a>
+					</button>
                     
                     <!-- Simple Open Now Indicator -->
 					<div class="flex items-center gap-3 mt-2">
@@ -120,73 +119,119 @@ const barbers = await getCollection('barbers', ({ data }) => data.lang === lang)
 					{t('pricing.title')}
 				</h2>
 
-				<!-- 3x3 Grid Layout -->
-				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+				<!-- Tiered Pricing Cards Layout -->
+				<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 					{
-						allServices.sort((a, b) => a.data.order - b.data.order).map((service, index) => {
-							const tier = service.data.tier || 'junior';
-							
-							// Visual Styles per Tier
-							const tierStyles = {
-								master: 'bg-gradient-to-b from-neutral-900 to-black text-luxury-gold border border-luxury-gold/30 hover:border-luxury-gold hover:shadow-[0_0_30px_rgba(198,168,124,0.1)]',
-								senior: 'bg-gradient-to-br from-luxury-gold to-[#9e8253] text-black border border-transparent shadow-lg',
-								junior: 'bg-neutral-900 text-neutral-400 border border-white/5 hover:border-white/20'
-							};
+						[
+							{
+								id: 'master',
+								title: 'Master',
+								desc: lang === 'sk' ? 'Prémiový zážitok. Bezchybná technika a najvyššia odbornosť.' : 'Premium experience. Flawless technique and highest expertise.',
+								services: masterServices,
+								cardStyle: 'bg-gradient-to-b from-neutral-900 to-black text-white border border-luxury-gold/30 hover:border-luxury-gold hover:shadow-[0_0_30px_rgba(198,168,124,0.1)] z-0',
+								titleStyle: 'text-luxury-gold',
+								descStyle: 'text-neutral-400',
+								itemTitle: 'text-white group-hover/item:text-luxury-gold',
+								itemDesc: 'text-neutral-500',
+								priceStyle: 'text-white',
+								durationStyle: 'text-neutral-500',
+								btnStyle: 'bg-luxury-gold text-black hover:bg-white',
+								dividerStyle: 'border-white/10',
+								itemBorderMobile: 'border-white/5',
+								hasNoise: true
+							},
+							{
+								id: 'senior',
+								title: 'Senior',
+								desc: lang === 'sk' ? 'Vysoká kvalita a precíznosť. Náš najobľúbenejší štandard.' : 'High quality and precision. Our most popular standard.',
+								services: seniorServices,
+								cardStyle: 'bg-gradient-to-br from-luxury-gold to-[#9e8253] text-black border border-transparent shadow-2xl lg:scale-105 z-10',
+								titleStyle: 'text-black',
+								descStyle: 'text-black/70',
+								itemTitle: 'text-black group-hover/item:text-white',
+								itemDesc: 'text-black/70',
+								priceStyle: 'text-black',
+								durationStyle: 'text-black/60',
+								btnStyle: 'bg-black text-luxury-gold hover:bg-white hover:text-black',
+								dividerStyle: 'border-black/10',
+								itemBorderMobile: 'border-black/5',
+								hasNoise: false
+							},
+							{
+								id: 'junior',
+								title: 'Junior',
+								desc: lang === 'sk' ? 'Skvelý štandard za dobrú cenu. Svieži talent nášho tímu.' : 'Great standard at fair price. Fresh talent of our team.',
+								services: juniorServices,
+								cardStyle: 'bg-neutral-900 text-white border border-white/5 hover:border-white/20 z-0',
+								titleStyle: 'text-white',
+								descStyle: 'text-neutral-400',
+								itemTitle: 'text-neutral-300 group-hover/item:text-white',
+								itemDesc: 'text-neutral-500',
+								priceStyle: 'text-neutral-400',
+								durationStyle: 'text-neutral-600',
+								btnStyle: 'bg-white/10 text-white hover:bg-white hover:text-black',
+								dividerStyle: 'border-white/10',
+								itemBorderMobile: 'border-white/5',
+								hasNoise: false
+							}
+						]
+						.map((tierData, cardIndex) => (
+							<div class={`group relative flex flex-col p-8 transition-all duration-500 reveal delay-${cardIndex * 100} ${tierData.cardStyle}`}>
+								{tierData.hasNoise && (
+									<div 
+										class="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay"
+										style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"
+									></div>
+								)}
 
-							const style = tierStyles[tier as keyof typeof tierStyles];
-							const isSenior = tier === 'senior';
-                            
-                            // Simple description logic
-                            let desc = '';
-                            if (service.data.description) {
-                                desc = service.data.description;
-                            } else {
-                                // Fallback/Hardcoded logic
-                                if (service.data.title.includes('Combo')) desc = lang === 'sk' ? 'Strih + Brada + Ritual' : 'Cut + Beard + Ritual';
-                                else if (service.data.title.includes('Brada') || service.data.title.includes('Beard')) desc = lang === 'sk' ? 'Úprava brady' : 'Beard Trim';
-                                else desc = lang === 'sk' ? 'Kompletný strih' : 'Complete Cut';
-                            }
+								<div class={`relative z-10 mb-8 pb-8 border-b ${tierData.dividerStyle} text-center lg:text-left`}>
+									<h3 class={`text-4xl lg:text-5xl font-black uppercase tracking-tighter ${tierData.titleStyle}`}>
+										{tierData.title}
+									</h3>
+									<p class={`text-sm mt-3 font-light leading-relaxed ${tierData.descStyle}`}>
+										{tierData.desc}
+									</p>
+								</div>
 
-							return (
-								<article
-									class={`group relative flex flex-col justify-between p-6 lg:p-10 aspect-square transition-all duration-500 hover:-translate-y-2 reveal ${style} delay-${(index % 3) * 100} ${isSenior ? 'lg:scale-105 z-10' : 'scale-100'}`}
-								>
-									<!-- Background Texture for Master -->
-									{tier === 'master' && (
-										<div 
-											class="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay"
-											style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"
-										></div>
-									)}
+								<ul class="relative z-10 flex flex-col gap-6 flex-grow mb-10">
+									{tierData.services.map(service => {
+										let desc = service.data.description;
+										if (!desc) {
+											if (service.data.title.includes('Combo')) desc = lang === 'sk' ? 'Strih + Brada + Ritual' : 'Cut + Beard + Ritual';
+											else if (service.data.title.includes('Brada') || service.data.title.includes('Beard')) desc = lang === 'sk' ? 'Úprava brady' : 'Beard Trim';
+											else desc = lang === 'sk' ? 'Kompletný strih' : 'Complete Cut';
+										}
+										
+										const cleanedTitle = service.data.title.replace(/Master |Senior |Junior /i, '');
 
-									<!-- Content -->
-									<div class="relative flex flex-col h-full justify-between z-10">
-										<div>
-											<div class="flex justify-between items-start mb-2">
-												<h3 class={`text-2xl lg:text-3xl font-black uppercase tracking-tighter ${isSenior ? 'text-black' : 'text-white'}`}>
-													{service.data.title}
-												</h3>
-											</div>
-											
-											<div class={`text-xs uppercase tracking-[0.2em] font-bold opacity-70 mb-8 ${isSenior ? 'text-black' : 'text-luxury-gold'}`}>
-												{desc}
-											</div>
-										</div>
+										return (
+											<li class="group/item flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 sm:gap-4 transition-colors">
+												<div class="flex flex-col flex-1">
+													<h4 class={`text-lg font-bold uppercase tracking-tight transition-colors ${tierData.itemTitle}`}>
+														{cleanedTitle}
+													</h4>
+													<p class={`text-xs mt-1 sm:mr-4 line-clamp-2 leading-relaxed ${tierData.itemDesc}`}>
+														{desc}
+													</p>
+												</div>
+												<div class={`flex flex-row sm:flex-col justify-between sm:justify-end items-center sm:items-end mt-3 sm:mt-0 pt-3 sm:pt-0 border-t sm:border-transparent shrink-0 ${tierData.itemBorderMobile}`}>
+													<span class={`text-xl font-black ${tierData.priceStyle}`}>
+														{service.data.price}
+													</span>
+													<span class={`text-xs font-mono mt-1 ${tierData.durationStyle}`}>
+														{service.data.duration}
+													</span>
+												</div>
+											</li>
+										);
+									})}
+								</ul>
 
-										<div class="flex flex-col items-center justify-center flex-grow py-4">
-											<span class={`text-6xl md:text-7xl lg:text-[6rem] font-black tracking-tighter leading-none ${isSenior ? 'text-black' : 'text-white'}`}>
-												{service.data.price}
-											</span>
-										</div>
-
-										<div class={`w-full pt-6 border-t flex justify-between items-end ${isSenior ? 'border-black/20 text-black/80' : 'border-white/10 text-neutral-500'}`}>
-											<span class="font-mono text-base">{service.data.duration}</span>
-											<span class="text-xs uppercase tracking-widest font-bold">{tier}</span>
-										</div>
-									</div>
-								</article>
-							)
-						})
+								<button class={`data-video-trigger relative z-10 w-full py-4 mt-auto font-black uppercase tracking-widest text-sm transition-all duration-300 ${tierData.btnStyle}`}>
+									{lang === 'sk' ? 'Rezervovať Termín' : 'Book Appointment'}
+								</button>
+							</div>
+						))
 					}
 				</div>
 			</div>
@@ -223,7 +268,7 @@ const barbers = await getCollection('barbers', ({ data }) => data.lang === lang)
 				>
 					<Image
 						src={gallery1}
-						alt="Signature Cut"
+						alt={t('gallery.service1')}
 						class="w-full h-full object-cover grayscale-0 md:grayscale md:group-hover:grayscale-0 transition-all duration-700 ease-out scale-100 group-hover:scale-105"
 					/>
 					<div
@@ -231,7 +276,7 @@ const barbers = await getCollection('barbers', ({ data }) => data.lang === lang)
 					>
 						<span
 							class="text-luxury-gold tracking-widest uppercase font-bold text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
-							>Signature Cut</span
+							>{t('gallery.service1')}</span
 						>
 					</div>
 				</div>
@@ -242,9 +287,17 @@ const barbers = await getCollection('barbers', ({ data }) => data.lang === lang)
 				>
 					<Image
 						src={gallery2}
-						alt="Detail Work"
+						alt={t('gallery.service2')}
 						class="w-full h-full object-cover grayscale-0 md:grayscale md:group-hover:grayscale-0 transition-all duration-700 ease-out scale-100 group-hover:scale-105"
 					/>
+					<div
+						class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+					>
+						<span
+							class="text-luxury-gold tracking-widest uppercase font-bold text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
+							>{t('gallery.service2')}</span
+						>
+					</div>
 				</div>
 
 				<!-- 3. Standard Item (Top Right 2) -->
@@ -253,9 +306,17 @@ const barbers = await getCollection('barbers', ({ data }) => data.lang === lang)
 				>
 					<Image
 						src={gallery3}
-						alt="Hot Towel"
+						alt={t('gallery.service3')}
 						class="w-full h-full object-cover grayscale-0 md:grayscale md:group-hover:grayscale-0 transition-all duration-700 ease-out scale-100 group-hover:scale-105"
 					/>
+					<div
+						class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+					>
+						<span
+							class="text-luxury-gold tracking-widest uppercase font-bold text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
+							>{t('gallery.service3')}</span
+						>
+					</div>
 				</div>
 
 				<!-- 4. Wide Item (Middle Right) -->
@@ -264,9 +325,17 @@ const barbers = await getCollection('barbers', ({ data }) => data.lang === lang)
 				>
 					<Image
 						src={gallery4}
-						alt="Styling"
+						alt={t('gallery.service4')}
 						class="w-full h-full object-cover grayscale-0 md:grayscale md:group-hover:grayscale-0 transition-all duration-700 ease-out scale-100 group-hover:scale-105"
 					/>
+					<div
+						class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-center px-4"
+					>
+						<span
+							class="text-luxury-gold tracking-widest uppercase font-bold text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
+							>{t('gallery.service4')}</span
+						>
+					</div>
 				</div>
 
 				<!-- 5. Wide Item (Bottom Left) -->
@@ -275,9 +344,17 @@ const barbers = await getCollection('barbers', ({ data }) => data.lang === lang)
 				>
 					<Image
 						src={gallery5}
-						alt="Barber Tools"
+						alt={t('gallery.service5')}
 						class="w-full h-full object-cover grayscale-0 md:grayscale md:group-hover:grayscale-0 transition-all duration-700 ease-out scale-100 group-hover:scale-105"
 					/>
+					<div
+						class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-center px-4"
+					>
+						<span
+							class="text-luxury-gold tracking-widest uppercase font-bold text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
+							>{t('gallery.service5')}</span
+						>
+					</div>
 				</div>
 
 				<!-- 6. Wide Item (Bottom Right) -->
@@ -286,9 +363,17 @@ const barbers = await getCollection('barbers', ({ data }) => data.lang === lang)
 				>
 					<Image
 						src={gallery6}
-						alt="Atmosphere"
+						alt={t('gallery.service6')}
 						class="w-full h-full object-cover grayscale-0 md:grayscale md:group-hover:grayscale-0 transition-all duration-700 ease-out scale-100 group-hover:scale-105"
 					/>
+					<div
+						class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-center px-4"
+					>
+						<span
+							class="text-luxury-gold tracking-widest uppercase font-bold text-sm translate-y-4 group-hover:translate-y-0 transition-transform duration-300"
+							>{t('gallery.service6')}</span
+						>
+					</div>
 				</div>
 			</div>
 		</section>
@@ -435,5 +520,8 @@ const barbers = await getCollection('barbers', ({ data }) => data.lang === lang)
 				</div>
 			</div>
 		</section>
+
+		<!-- Video Modal -->
+		<VideoModal lang={lang} />
 	</main>
 </Layout>

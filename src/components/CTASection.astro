@@ -48,13 +48,12 @@ const t = useTranslations(lang)
                 class="absolute inset-0 bg-luxury-gold blur-xl opacity-30 group-hover:opacity-70 transition-opacity duration-500 rounded-full"
             >
             </div>
-            <a
-                href="https://booqme.sk/barberba"
-                target="_blank"
-                class="relative block px-12 py-6 bg-luxury-gold hover:bg-white text-black font-black uppercase tracking-widest text-lg transition-all duration-300 rounded-full hover:scale-105 active:scale-95"
+            <button
+                class="data-video-trigger relative block px-12 py-6 bg-luxury-gold hover:bg-white text-black font-black uppercase tracking-widest text-lg transition-all duration-300 rounded-full hover:scale-105 active:scale-95"
+                aria-label={t('cta.button')}
             >
                 {t('cta.button')}
-            </a>
+            </button>
         </div>
 
         <p

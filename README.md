@@ -2,9 +2,9 @@
 
 A high-performance, dark-themed Barber Shop website template built with [Astro](https://astro.build) and [Tailwind CSS](https://tailwindcss.com). Designed for speed (100/100 Lighthouse), accessibility, and premium aesthetics.
 
-![Project Preview](https://barbershop-demo-1.vercel.app)
+[Project Preview](https://barbershop-demo-1.vercel.app)
 
-## 🚀 Key Features
+## Key Features
 
 *   **100/100 Lighthouse Score**: Optimized for Core Web Vitals (LCP, CLS, FID).
 *   **Modern Tech Stack**: Built with Astro v5, Tailwind CSS, and TypeScript.
@@ -18,7 +18,7 @@ A high-performance, dark-themed Barber Shop website template built with [Astro](
 *   **Content Collections**: Type-safe content management for Barbers, Services, and Reviews.
 *   **SEO Optimized**: Semantic HTML5, metadata, and Open Graph tags.
 
-## 🛠️ Stack
+## Stack
 
 *   **Framework**: [Astro](https://astro.build)
 *   **Styling**: [Tailwind CSS](https://tailwindcss.com)
@@ -26,7 +26,7 @@ A high-performance, dark-themed Barber Shop website template built with [Astro](
 *   **Icons**: [Lucide Icons](https://lucide.dev) (or SVGs)
 *   **Fonts**: `@fontsource-variable/inter` & `@fontsource-variable/oswald`
 
-## 📦 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -56,7 +56,7 @@ A high-performance, dark-themed Barber Shop website template built with [Astro](
     npm run build
     ```
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 src/
@@ -68,7 +68,7 @@ src/
 └── styles/         # Global CSS using Tailwind directives
 ```
 
-## 🎨 Customization
+## Customization
 
 ### Changing Content
 Edit the markdown files in `src/content/` to update:
@@ -82,3 +82,5 @@ The project uses a custom Tailwind config. Update `tailwind.config.mjs` to chang
 ## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
+
+(This README.md file was generated using Generative Artificial Intelligence)
